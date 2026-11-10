@@ -250,7 +250,7 @@
       <ol class="steps">
         <li>The customer presses <strong>Pay now</strong> in their basket. The order appears as <span class="status amber">Pending</span> and its bags are held for them for 35 minutes, so nobody else can buy them meanwhile.</li>
         <li>They pay on Stripe's secure payment page. The order becomes <span class="status green">Paid</span>, gets its invoice number (0001, 0002…) and the stock goes down.</li>
-        <li>Two emails go out by themselves: the customer gets their <strong>order confirmation with the invoice attached</strong>, and the shop's notification address gets <strong>“New online order …”</strong> with a button to open it.</li>
+        <li>The emails go out by themselves: the customer gets their <strong>order confirmation with the invoice attached</strong>; the shop's notification address and every staff account (admins, shop managers and SEO managers) get <strong>“New online order …”</strong> with a button to open it; and every staff account also gets a copy of the customer's confirmation, with <em>Copy:</em> at the start of its subject.</li>
         <li>You pack the bags, send the parcel and press <span class="ui">Mark fulfilled</span>. The customer's account then shows the order as <strong>Dispatched</strong>.</li>
       </ol>
       <p>If the customer never pays, the order becomes <span class="status">Cancelled</span> or <span class="status">Expired</span> by itself and the bags go back on sale. You never need to tidy those up.</p>
@@ -314,7 +314,7 @@
       <p>The <span class="ui">…</span> button beside Download invoice has two more actions:</p>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-order-more.webp" alt="The order page with its More actions menu open, offering Resend confirmation and Regenerate PDF." width="2560" height="1040" loading="lazy"></button><figcaption>More actions on a paid order.</figcaption></figure>
       <ul class="list">
-        <li><strong>Resend confirmation</strong> sends the customer their confirmation email and invoice again, and the shop a fresh copy of the order notification. Use it when a customer says they never received it (ask them to check their spam folder too).</li>
+        <li><strong>Resend confirmation</strong> sends the customer their confirmation email and invoice again (with the copy for the staff), and the shop team a fresh copy of the order notification. Use it when a customer says they never received it (ask them to check their spam folder too).</li>
         <li><strong>Regenerate PDF</strong> makes the invoice file again from the details saved when the order was paid. You will rarely need it.</li>
       </ul>
 
@@ -356,7 +356,7 @@
     <!-- 7 -->
     <section class="topic" id="messages">
       <div class="topic-head"><span class="num">7</span><h2>Messages</h2><a class="anchor" href="#messages">Copy link</a></div>
-      <p class="summary">Messages sent through the website's contact form. Each one is also emailed to the shop's notification address.</p>
+      <p class="summary">Messages sent through the website's contact form. Each one is also emailed to the shop's notification address and to every staff account.</p>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-messages.webp" alt="The Messages list with All and Unread filters, each message showing the sender, a preview and buttons to open, mark as read, reply and delete." width="2560" height="1280" loading="lazy"></button><figcaption>Unread messages have a red dot.</figcaption></figure>
       <ol class="steps">
         <li>Open <strong>Messages</strong> and press <span class="ui">Open</span> on a message. Opening it marks it as read.</li>
@@ -575,7 +575,7 @@
             <tr><td>Delivery label</td><td>The name of the charge, normally “UK delivery”.</td></tr>
             <tr><td>Delivery statement</td><td>The sentence about timings shown on the basket, the product pages, the delivery page and the confirmation email.</td></tr>
             <tr><td>Dispatched within / Delivery takes from / up to (days)</td><td>Working days. Told to Google beside each bag and shown on Stripe's payment page.</td></tr>
-            <tr><td>Notification email</td><td>Where every new order and contact message is emailed. Required for online ordering.</td></tr>
+            <tr><td>Notification email</td><td>A shop mailbox that gets every new order and contact message, as every staff account does. Required for online ordering.</td></tr>
             <tr><td>Returns accepted in store</td><td>Lets the returns page say customers can bring a return to the warehouse as well as posting it.</td></tr>
           </tbody>
         </table>
@@ -595,7 +595,19 @@
         <li>Press <span class="ui">Send invitation</span>. They get an email to set their own password; the link lasts a day.</li>
       </ol>
       <figure class="shot medium"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-users-invite.webp" alt="The Invite a colleague box with Name, Email and Role fields and a Send invitation button." width="2560" height="1360" loading="lazy"></button><figcaption>Inviting a colleague.</figcaption></figure>
-      <p>Each row's <span class="ui">…</span> menu has <strong>Resend invitation</strong> (it also works as a fresh set-password link), <strong>Change role</strong> and <strong>Delete</strong>. You cannot change your own role or delete yourself, and the website always keeps at least one admin.</p>
+      <div class="note info">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <div><p><strong>Shop emails:</strong> every staff account, whatever its role, gets each new order, a copy of each customer's order confirmation and each contact message, until an admin switches one off under <span class="ui">Edit</span>. An account whose email address is not confirmed yet gets none until it is. The <strong>Shop emails</strong> column shows what each person gets.</p></div>
+      </div>
+      <h3 id="edit-user">Editing a colleague</h3>
+      <ol class="steps">
+        <li>Open the row's <span class="ui">…</span> menu and choose <span class="ui">Edit</span>.</li>
+        <li>Change their <strong>Name</strong>, <strong>Email</strong> or <strong>Role</strong>. A new email address works straight away for logging in and for the shop emails, so let them know.</li>
+        <li>Under <strong>Shop emails</strong>, switch <strong>New orders</strong>, <strong>Copies of order confirmations</strong> and <strong>Contact messages</strong> on or off for that person.</li>
+        <li>Press <span class="ui">Save</span>.</li>
+      </ol>
+      <p>On your own row, <span class="ui">Edit</span> only chooses your shop emails: you change your own name and email under <strong>Settings → Profile</strong>, and only another admin can change your role. The notification address in Settings → Shop always gets new orders and messages, whatever is switched off here.</p>
+      <p>The menu also has <strong>Resend invitation</strong> (it also works as a fresh set-password link) and <strong>Delete</strong>. You cannot delete yourself, and the website always keeps at least one admin.</p>
     </section>
 
     <!-- 15 -->
