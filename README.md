@@ -27,16 +27,27 @@ The empty `.nojekyll` file tells GitHub to serve the files exactly as they are.
 
 ## Publish on the shop's server
 
-The guide is also served at https://docs.vintagewarehouseglasgow.co.uk, from the `public_html/docs` folder on 20i (the subdomain's folder). Upload it again after a change, from the folder that holds `user-guide`:
+The guide is also served at https://docs.vintagewarehouseglasgow.co.uk, from the `public_html/docs` folder on 20i (the subdomain's folder). [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) uploads it on every push to `main`, and on a manual run (**Actions → Deploy the help guide → Run workflow**). It first checks that every link, picture and section the pages point at exists, and stops before uploading if one does not; after the upload it checks that the start page answers.
+
+It needs four repository secrets (**Settings → Secrets and variables → Actions**), with the same values as in the shop's own repository:
+
+| Secret | Value |
+| --- | --- |
+| `SSH_HOST` | the 20i SSH server, `ssh.gb.stackcp.com` |
+| `SSH_PORT` | `22` |
+| `SSH_USER` | the SSH user, `vintagewarehouseglasgow.co.uk` |
+| `SSH_PRIVATE_KEY` | the private key whose public half is added under SSH access in StackCP |
+
+To upload by hand instead, from the folder that holds `user-guide`:
 
 ```bash
-rsync -az --delete --exclude='.git/' --exclude='/README.md' --exclude='/.nojekyll' \
+rsync -az --delete --exclude='.git/' --exclude='/.github/' --exclude='/README.md' --exclude='/.nojekyll' \
   user-guide/ simon-vintage:/home/sites/34a/5/51ceccf406/public_html/docs/
 ```
 
-- `simon-vintage` is the SSH host from your `~/.ssh/config`. `--delete` keeps the folder identical to `user-guide`, and touches nothing outside `docs/`.
+- `--delete` keeps the folder identical to this repository and touches nothing outside `docs/`. The git and CI files, this README and `.nojekyll` stay off the server.
 - `.htaccess` switches off the shop's rewrite rules, which Apache would otherwise apply from the folder above, and stops folder listings. GitHub Pages ignores it.
-- The live site's deploy protects `docs/`, so deploying `main` never deletes the guide.
+- The live site's deploy protects `docs/`, so deploying the shop's `main` never deletes the guide.
 - 20i's CDN can keep an old copy of a page for a few minutes after an upload.
 
 ## Search engines

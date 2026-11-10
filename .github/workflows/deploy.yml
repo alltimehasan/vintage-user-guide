@@ -1,0 +1,114 @@
+name: Deploy the help guide
+
+# Every push to main (and a manual run) uploads the guide to public_html/docs on 20i, served at
+# docs.vintagewarehouseglasgow.co.uk. The pages are plain files, so there is nothing to build: the run checks
+# that every link and picture points at something real, uploads, then checks that the site answers.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push waits for the running upload instead of cancelling it half way.
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # The same 20i SSH details as the shop's own deploy, set as secrets in this repository too.
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      # The docs subdomain's folder, inside the live shop's web root. The shop's deploy protects it, so a live
+      # deploy never deletes the guide.
+      DEPLOY_PATH: /home/sites/34a/5/51ceccf406/public_html/docs
+      SITE_URL: https://docs.vintagewarehouseglasgow.co.uk
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Check the secrets
+        run: |
+          if [ -z "${SSH_HOST}" ] || [ -z "${SSH_USER}" ] || [ -z "${SSH_PORT}" ]; then
+            echo "::error::The SSH_HOST, SSH_USER, SSH_PORT and SSH_PRIVATE_KEY secrets must all be set."
+            exit 1
+          fi
+
+      # Every link, picture and #section in the three pages must exist, so a renamed screenshot or section never
+      # reaches the server as a broken link.
+      - name: Check links and pictures
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+
+          pages = ['index.html', 'admin.html', 'customers.html']
+          html = {page: open(page, encoding='utf-8').read() for page in pages}
+          ids = {page: set(re.findall(r'id="([^"]+)"', text)) for page, text in html.items()}
+          broken = []
+
+          for page, text in html.items():
+              for href in re.findall(r'href="([^"]+)"', text):
+                  if href.startswith(('http://', 'https://', 'mailto:')):
+                      continue
+                  path, _, fragment = href.partition('#')
+                  target = path or page
+                  if path and not os.path.exists(path):
+                      broken.append(f'{page}: link to {href}')
+                  elif fragment and target in ids and fragment not in ids[target]:
+                      broken.append(f'{page}: link to the missing section {href}')
+              for src in re.findall(r'src="([^"]+)"', text):
+                  if src and not src.startswith(('http://', 'https://')) and not os.path.exists(src):
+                      broken.append(f'{page}: picture or script {src}')
+
+          for problem in broken:
+              print(f'::error::{problem}')
+
+          sys.exit(1 if broken else 0)
+          PY
+
+      - name: Start SSH agent
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${SSH_PORT}" "${SSH_HOST}" >> ~/.ssh/known_hosts
+
+      # --delete keeps docs/ identical to this repository and touches nothing outside it. The git and CI files,
+      # the README (notes for whoever keeps the guide) and GitHub Pages' .nojekyll stay off the server.
+      - name: Upload the guide
+        run: |
+          ssh -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "mkdir -p '${DEPLOY_PATH}'"
+          rsync -az --delete \
+            --exclude='.git/' \
+            --exclude='/.github/' \
+            --exclude='/README.md' \
+            --exclude='/.nojekyll' \
+            -e "ssh -p ${SSH_PORT}" \
+            ./ "${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}/"
+
+      # 20i's CDN can answer from an older copy for a moment, so a slow or stale answer gets two more tries.
+      - name: Smoke test
+        run: |
+          for attempt in 1 2 3; do
+            status=$(curl -s -o page.html -w '%{http_code}' --max-time 30 "${SITE_URL}/index.html" || true)
+            echo "GET ${SITE_URL}/index.html -> ${status} (try ${attempt})"
+            if [ "${status}" = "200" ] && grep -q '<title>Help guide' page.html; then
+              exit 0
+            fi
+            sleep 10
+          done
+
+          echo "::error::The guide did not answer with its start page (HTTP ${status})."
+          exit 1
