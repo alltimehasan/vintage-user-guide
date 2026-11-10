@@ -1,0 +1,18 @@
+# The help guide at docs.vintagewarehouseglasgow.co.uk is plain files in public_html/docs. Apache also reads the
+# shop's .htaccess in the folder above, which sends every request into Laravel's public/ folder; switching the
+# rewrite engine off here keeps those rules away from the guide. (GitHub Pages ignores this file.)
+RewriteEngine Off
+
+Options -Indexes
+DirectoryIndex index.html
+
+# Screenshots, fonts and the stylesheet change only with a new upload.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp "access plus 1 week"
+    ExpiresByType image/png "access plus 1 week"
+    ExpiresByType font/woff2 "access plus 1 month"
+    ExpiresByType text/css "access plus 1 day"
+    ExpiresByType application/javascript "access plus 1 day"
+    ExpiresByType text/javascript "access plus 1 day"
+</IfModule>

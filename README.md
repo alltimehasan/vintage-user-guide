@@ -25,6 +25,20 @@ Then open http://localhost:8000. Opening the files straight from disk works too,
 
 The empty `.nojekyll` file tells GitHub to serve the files exactly as they are.
 
+## Publish on the shop's server
+
+The guide is also served at https://docs.vintagewarehouseglasgow.co.uk, from the `public_html/docs` folder on 20i (the subdomain's folder). Upload it again after a change, from the folder that holds `user-guide`:
+
+```bash
+rsync -az --delete --exclude='.git/' --exclude='/README.md' --exclude='/.nojekyll' \
+  user-guide/ simon-vintage:/home/sites/34a/5/51ceccf406/public_html/docs/
+```
+
+- `simon-vintage` is the SSH host from your `~/.ssh/config`. `--delete` keeps the folder identical to `user-guide`, and touches nothing outside `docs/`.
+- `.htaccess` switches off the shop's rewrite rules, which Apache would otherwise apply from the folder above, and stops folder listings. GitHub Pages ignores it.
+- The live site's deploy protects `docs/`, so deploying `main` never deletes the guide.
+- 20i's CDN can keep an old copy of a page for a few minutes after an upload.
+
 ## Search engines
 
 Every page has `<meta name="robots" content="noindex">`, so the guide stays out of Google while it lives on a github.io address. Remove that line from the three pages if the guide should be found by search, for example once it has the shop's own domain.
