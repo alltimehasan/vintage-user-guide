@@ -108,14 +108,21 @@
       <ul class="list">
         <li>Use <span class="ui">All bags</span>, <span class="ui">Vintage</span> and <span class="ui">New</span> to choose what you see.</li>
         <li>Type in <strong>Search the bags</strong> to find a bag by name or what is in it, such as <em>denim</em> or <em>jackets</em>. Results appear as you type.</li>
-        <li>Each card shows the weight, roughly how many pieces, the sizes and the price. All prices include VAT.</li>
+        <li>Each card shows the weight, roughly how many pieces, the sizes and the price.</li>
+        <li>Prices are shown <strong>before VAT</strong>, marked <em>exc VAT</em>; VAT is added at checkout. Products marked <em>No VAT</em> have none. (<a href="#faq-vat">More about VAT</a>)</li>
       </ul>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/shop-search.webp" alt="The shop after searching for denim, showing one matching bag." width="2560" height="1520" loading="lazy"></button><figcaption>Searching for “denim”.</figcaption></figure>
 
       <h3 id="product-page">A bag's page</h3>
-      <p>Click a bag to see its photos and full description. Click a small photo to swap it in, or the main photo to see all the photos full screen: swipe, use the arrow buttons or your keyboard's arrow keys to move between them, and press the cross (or Esc) to close.</p>
+      <p>Click a bag to see its photos and full description. Click a small photo to swap it in (on a phone, you can also swipe the main photo), or click the main photo to see all the photos full screen: swipe, use the arrow buttons or your keyboard's arrow keys to move between them, and press the cross (or Esc) to close.</p>
+      <ul class="list">
+        <li>Beside the price you see whether it includes VAT, for example <em>“Excluding VAT (£96.00 including VAT)”</em>, and the delivery charge.</li>
+        <li>When only a few are left, the page says so, for example <strong>Only 2 left</strong>.</li>
+        <li>On a phone, the price and the <span class="ui">Add to basket</span> button stay at the bottom of the screen while you scroll.</li>
+        <li>At the bottom of the page, <strong>More bags</strong> shows other bags in stock.</li>
+      </ul>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/shop-product.webp" alt="A bag's page with a large photo on the left and, on the right, the name, details, price with the delivery charge, In stock, a quantity box and an Add to basket button." width="2560" height="1800" loading="lazy"></button><figcaption>A bag's page. Choose how many with − and +, then press Add to basket.</figcaption></figure>
-      <p>Vintage bags are secondhand, so the clothes show the signs of wear that come with their age. When a bag has sold out, it says <strong>Sold out</strong>. Press <span class="ui">See bags in stock</span> to look at others, or <span class="ui">Ask us when it is back</span> to send us a message.</p>
+      <p>Vintage bags are secondhand, so the clothes show the signs of wear that come with their age. When a bag has sold out, it says <strong>Sold out</strong>. Press <span class="ui">See bags in stock</span> to look at others, or <span class="ui">Ask us when it is back</span>: the contact form opens with a message about that bag already started, so you only add your name and email.</p>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/shop-product-sold-out.webp" alt="A sold-out bag's page with a large Sold out stamp, a greyed Sold out button, and links to see bags in stock or ask when it is back." width="2560" height="1640" loading="lazy"></button><figcaption>A sold-out bag.</figcaption></figure>
     </section>
 
@@ -129,7 +136,7 @@
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/shop-basket.webp" alt="The basket with two bags, each with a quantity box and a Remove link, then the subtotal, UK delivery, total including VAT, a note about delivery and cancelling, and a Pay now button." width="2560" height="2200" loading="lazy"></button><figcaption>The basket: change quantities, check the total, then press Pay now.</figcaption></figure>
       <ul class="list">
         <li>Use <span class="ui">−</span> and <span class="ui">+</span>, or type a number, to change how many. Press <span class="ui">Remove</span> to take a bag out.</li>
-        <li>The total includes VAT and delivery. Delivery is to UK addresses only.</li>
+        <li>Prices in the basket are before VAT. Under them you see the subtotal, the UK delivery charge, the VAT and the total you pay. Delivery is to UK addresses only.</li>
         <li>If a bag sells out or runs low while it is in your basket, the basket tells you and adjusts itself.</li>
         <li>Your basket is kept while you browse. It empties if you log out or leave the website for a long time.</li>
       </ul>
@@ -142,7 +149,7 @@
       <ol class="steps">
         <li>In your basket, check the bags and the total, then press <span class="ui">Pay now</span>.</li>
         <li>Stripe's secure payment page opens. Enter your email, delivery address, phone number and card details. Depending on your device, Stripe may also offer Apple Pay or Google Pay.</li>
-        <li>Press the pay button on Stripe's page.</li>
+        <li>Check the amounts: Stripe's page shows each bag with its VAT added, and the delivery charge. Then press the pay button.</li>
         <li>You come back to our website and see <strong>“Thank you for your order”</strong> with your order number. Your confirmation and invoice arrive by email.</li>
       </ol>
       <div class="note info">
@@ -299,6 +306,7 @@
       <ul class="list">
         <li>We deliver to <strong>UK addresses only</strong>, by courier.</li>
         <li>Delivery is <strong>one charge per order</strong>, however many bags you buy. It is shown next to every price, in your basket and on the payment page before you pay.</li>
+        <li>Like our prices, the delivery charge is shown before VAT. VAT is added to it in proportion to the products in your order that carry VAT, so an order of only <em>No VAT</em> products pays the delivery charge as it is.</li>
         <li>How long it takes is shown under the Add to basket button and in your basket, for example “Dispatched within 2 working days. Delivered by courier in 2–3 working days.”</li>
         <li>Our <strong>Delivery and returns</strong> page (at the bottom of every page of the website) has the details.</li>
       </ul>
@@ -344,6 +352,7 @@
       <details class="faq" id="faq-vanished"><summary>A bag disappeared from my basket</summary><div><p>Our bags are often one of a kind. If one sells out or runs low while it is in your basket, the basket removes or reduces it and tells you what changed.</p></div></details>
       <details class="faq" id="faq-expired"><summary>The payment page expired, or says payment not completed</summary><div><p>Nothing was charged. Go back to your basket and press Pay now again. The payment page holds your bags for 35 minutes.</p></div></details>
       <details class="faq" id="faq-address"><summary>I used the wrong delivery address</summary><div><p>Contact us as soon as possible, quoting your order number, and we will sort it out before we send it.</p></div></details>
+      <details class="faq" id="faq-vat"><summary>Do your prices include VAT?</summary><div><p>No. Prices are shown before VAT, marked <em>exc VAT</em>, and VAT at 20% is added at checkout; each bag's page also gives its price with VAT. Products marked <em>No VAT</em> have none. Your basket shows the VAT and the total before you pay, and your invoice shows the VAT on each item.</p></div></details>
       <details class="faq" id="faq-invoice"><summary>Do I get a VAT invoice?</summary><div><p>Yes. It is attached to your confirmation email, and you can open it any time from your account with View invoice.</p></div></details>
       <details class="faq" id="faq-delete"><summary>How do I delete my account?</summary><div><p>Reply to the account email we sent you, or contact us, and we will delete it. Your past orders stay on our records, as the law requires.</p></div></details>
     </section>

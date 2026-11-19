@@ -348,6 +348,7 @@
       <ul class="list">
         <li>Invoice numbers run 0001, 0002, 0003… with no gaps.</li>
         <li>Search by number (“12” or “0012”) or the customer.</li>
+        <li>Each line shows its price before VAT and its VAT rate (20%, or 0% for No VAT products). Under the lines, the invoice gives the VAT at each rate, the total VAT and the total paid.</li>
         <li>An invoice keeps the business details from the day it was paid. Changing <a href="#business">Settings → Business</a> later affects new invoices only.</li>
         <li>The customer receives their invoice as a PDF with the order confirmation, and can open it again from their account.</li>
       </ul>
@@ -394,10 +395,12 @@
     <!-- 9 -->
     <section class="topic" id="products">
       <div class="topic-head"><span class="num">9</span><h2>Products</h2><a class="anchor" href="#products">Copy link</a></div>
-      <p class="summary">The bags for sale. Each one has a name, price, stock, photos and a description.</p>
+      <p class="summary">The bags for sale. Each one has a name, a price before VAT, stock, photos and a description.</p>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-products.webp" alt="The Products list with a photo, name, SKU, kind, price, stock, available count and a Published switch for each bag." width="2560" height="1520" loading="lazy"></button><figcaption>The Products list. The Published switch takes a bag in or out of the shop straight away.</figcaption></figure>
       <ul class="list">
         <li>Search by name or SKU, and use the menu to show <strong>Published</strong>, <strong>Unpublished</strong> or <strong>Sold out</strong> bags.</li>
+        <li>The <strong>Price</strong> is before VAT, with <strong>+ VAT</strong> or <strong>No VAT</strong> under it (<a href="#vat">how VAT works</a>).</li>
+        <li>Tick the boxes on the left to choose bags to export, and use <span class="ui">Import</span> and <span class="ui">Export</span> at the top to work on many bags at once in a spreadsheet (<a href="#import-export">how</a>).</li>
         <li><strong>Stock</strong> is how many bags you have. <strong>Available</strong> is what customers can still buy: stock minus any bags held by customers who are paying right now.</li>
         <li>Click a bag's name, or use its <span class="ui">…</span> menu, to edit or delete it.</li>
       </ul>
@@ -405,7 +408,8 @@
       <h3 id="add-a-bag">Adding a new bag</h3>
       <ol class="steps">
         <li>Open <strong>Products</strong> and press <span class="ui">New product</span>.</li>
-        <li>Fill in the <strong>Name</strong>, choose <strong>Vintage</strong> or <strong>New</strong>, and enter the <strong>Price</strong> including VAT and the <strong>Stock</strong>.</li>
+        <li>Fill in the <strong>Name</strong>, choose <strong>Vintage</strong> or <strong>New</strong>, and enter the <strong>Price</strong> before VAT and the <strong>Stock</strong>.</li>
+        <li>Leave <strong>Add VAT at checkout</strong> on, unless the product is sold without VAT (such as toys); then switch it off.</li>
         <li>Add the weight, pieces and sizes (for example <em>20</em>, <em>60–80 pieces</em>, <em>mixed sizes</em>). They make the line shown under the name: “Approx. 20 kg · 60–80 pieces · mixed sizes”.</li>
         <li>Write a one-sentence <strong>Short description</strong> and a fuller <strong>Description</strong> (condition, what is usually inside, any wear).</li>
         <li>Under <strong>Add photos</strong>, choose up to 6 photos.</li>
@@ -423,9 +427,10 @@
             <tr><td>Web address</td><td>(Edit page only.) The end of the bag's address after /shop/. Made from the name; if you change it, the old address keeps working.</td></tr>
             <tr><td>Kind</td><td>Vintage or New. Customers can filter the shop by it, and vintage bags say they are secondhand.</td></tr>
             <tr><td>SKU</td><td>Your own stock code. Optional; shown in the admin and on orders.</td></tr>
-            <tr><td>Short description</td><td>One sentence for product cards and search results.</td></tr>
+            <tr><td>Short description</td><td>One sentence shown under the name on the bag's page and in search results.</td></tr>
             <tr><td>Description</td><td>The full text on the bag's page. You can use simple formatting (<a href="#markdown">see the formatting guide</a>); a preview shows how it will look.</td></tr>
-            <tr><td>Price (includes VAT)</td><td>What the customer pays for one bag, before delivery.</td></tr>
+            <tr><td>Price (excluding VAT)</td><td>The price of one bag before VAT and delivery. The shop shows it as “£80.00 exc VAT”.</td></tr>
+            <tr><td>Add VAT at checkout</td><td>On: VAT at 20% is added at checkout, so £80.00 becomes £96.00. Off: no VAT, for products sold without it, such as toys; the shop shows “No VAT”.</td></tr>
             <tr><td>Stock</td><td>Bags ready to sell. It goes down by itself when someone pays.</td></tr>
             <tr><td>Weight, Pieces, Sizes</td><td>Optional. Together they make the line under the name.</td></tr>
             <tr><td>Position</td><td>Lower numbers come first in the shop.</td></tr>
@@ -433,6 +438,29 @@
             <tr><td>Featured</td><td>Shown first on the home page, which shows four bags; the newest bags fill any spaces.</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <h3 id="vat">Prices and VAT</h3>
+      <p>Enter every price <strong>before VAT</strong>. The website adds VAT at 20% at checkout, unless the bag's <strong>Add VAT at checkout</strong> switch is off.</p>
+      <ul class="list">
+        <li><strong>Products with VAT</strong> (most of them) show “exc VAT” beside the price in the shop. The bag's page also gives the price with VAT, for example “Excluding VAT (£96.00 including VAT)”.</li>
+        <li><strong>Products without VAT</strong>, such as toys, show “No VAT”, and the customer pays the price as it is.</li>
+        <li><strong>Delivery</strong> is also entered before VAT (<a href="#delivery-settings">Settings → Shop</a>). VAT is added to it in proportion to the products in the order that carry VAT, so an order of only No VAT products pays the delivery charge as it is.</li>
+        <li>The basket, Stripe's payment page, the confirmation email, the order page and the <a href="#invoices">invoice</a> all show the VAT on its own line.</li>
+      </ul>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order (with £15.00 delivery)</th><th>The customer pays</th></tr></thead>
+          <tbody>
+            <tr><td>One £80.00 bag</td><td>£80.00 + £16.00 VAT, and £15.00 delivery + £3.00 VAT: <strong>£114.00</strong></td></tr>
+            <tr><td>£20.00 of toys (No VAT)</td><td>£20.00 and £15.00 delivery, no VAT: <strong>£35.00</strong></td></tr>
+            <tr><td>The £80.00 bag and the £20.00 toys together</td><td>£100.00 + £16.00 VAT on the bag, and £15.00 delivery + £2.40 VAT on the bag's share of it (80%): <strong>£133.40</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note important">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
+        <div><p><strong>Which products carry VAT is for your accountant to confirm.</strong> Switch <strong>Add VAT at checkout</strong> off only for products they say are sold without VAT. Changing it never alters past orders or invoices.</p></div>
       </div>
 
       <h3 id="photos">Photos</h3>
@@ -443,6 +471,7 @@
         <li><strong>Order:</strong> use the up and down arrows to change the gallery order.</li>
         <li><strong>Alt text:</strong> a short description of each photo, for customers who cannot see it and for Google, for example <em>“Rails of denim jackets in the warehouse”</em>. It is required and saves when you click away from the box.</li>
         <li><strong>Delete:</strong> the bin icon removes a photo for good, after asking.</li>
+        <li><strong>What the photos show:</strong> to tell customers whether the photos show the actual bag or typical stock, fill in the <strong>Photo note</strong> in <a href="#delivery-settings">Settings → Shop</a>. It appears under the photos on every bag's page.</li>
       </ul>
       <div class="note tip">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>
@@ -451,7 +480,8 @@
 
       <h3 id="stock">Stock and sold-out bags</h3>
       <ul class="list">
-        <li>When stock reaches 0 the bag shows <strong>Sold out</strong> in the shop, with a link for customers to ask when it is back. It stays listed so people can still find it.</li>
+        <li>When 3 or fewer are left, the bag's page says so, for example <strong>Only 2 left</strong>.</li>
+        <li>When stock reaches 0 the bag shows <strong>Sold out</strong> in the shop, with a link for customers to ask when it is back; their message arrives in <a href="#messages">Messages</a> with the bag's name already in it. The bag stays listed so people can still find it.</li>
         <li>To restock, open the bag and change <strong>Stock</strong>, then press <span class="ui">Save</span>.</li>
         <li>While a customer is paying, their bags are held for 35 minutes. If a bag looks sold out but you have stock, someone is probably paying for it right now.</li>
         <li>If someone buys while you have the edit page open and you also changed Stock, the website asks you to check the number again before saving, so no sale is lost.</li>
@@ -460,6 +490,38 @@
 
       <h3 id="delete-product">Removing a bag</h3>
       <p>To take a bag out of the shop for a while, switch <strong>Published</strong> off. To remove it for good, use <span class="ui">Delete</span>. Past orders keep their own copy of the details, so deleting a bag never changes an order or invoice. A deleted bag's web address stops working; add a <a href="#redirects">redirect</a> if it was shared widely.</p>
+
+      <h3 id="import-export">Importing and exporting bags</h3>
+      <p>Bags can go in and out of the shop as a spreadsheet: a CSV file, which Excel, Numbers and Google Sheets all open and save. It is the quick way to change many prices or stock numbers at once, or to add several bags in one go.</p>
+      <p><strong>To export:</strong></p>
+      <ol class="steps">
+        <li>On <strong>Products</strong>, tick the bags you want. The box at the top of the list ticks the whole page; <span class="ui">Select all</span> then takes every bag your search and filter show.</li>
+        <li>Press <span class="ui">Export</span> (or <span class="ui">Export selected</span> in the bar above the list).</li>
+        <li>Choose which bags: the ticked ones, the ones your search and filter show, or all of them. Then choose the columns; all are ticked to start.</li>
+        <li>Press <span class="ui">Download CSV</span>.</li>
+      </ol>
+      <p><strong>To import:</strong></p>
+      <ol class="steps">
+        <li>On <strong>Products</strong>, press <span class="ui">Import</span>.</li>
+        <li>Choose your CSV file. To start from nothing, press <span class="ui">Download a template</span> first and fill it in.</li>
+        <li><strong>Check the columns.</strong> Each column of your file is shown with the bag detail it will fill. Common headings such as <em>Title</em>, <em>Qty</em> or <em>Cost</em> are recognised; choose <span class="ui">Ignore this column</span> to leave a detail alone.</li>
+        <li><strong>Choose what to import:</strong> add new bags and update existing ones, only add new bags, or only update existing ones.</li>
+        <li><strong>Check the preview.</strong> Each row says <em>New product</em>, <em>Update</em> (with every change, such as “Price: £50.00 → £55.00”), <em>Put back</em> (a deleted bag whose web address is in the file), <em>Skipped</em> or <em>Problem</em> (with the reason). Nothing is saved yet.</li>
+        <li>Press the import button under the preview, which says how many bags it will add or change (for example <span class="ui">Import 4 products</span>). Rows with problems are left out and listed afterwards: correct them in the spreadsheet and import the file again.</li>
+      </ol>
+      <ul class="list">
+        <li>A row changes an existing bag when its <strong>ID</strong>, <strong>SKU</strong> or <strong>web address</strong> matches one. Any other row adds a new bag. Keep the ID column in an export you mean to import again.</li>
+        <li>Only the columns in the file are changed. A file with just ID, Price and Stock changes only prices and stock.</li>
+        <li>An empty cell clears an optional detail (SKU, weight, pieces, sizes, descriptions) and leaves everything else as it is.</li>
+        <li>Prices are before VAT. The <strong>VAT</strong> column says <em>yes</em> or <em>no</em>; a new bag without a VAT column carries VAT.</li>
+        <li>Photos are not imported: add them on each bag's page. The product and photo links in an export are for reference only.</li>
+        <li>A file exported from another copy of the website, such as the test site, has its IDs ignored, because each site numbers its bags differently; its rows match by SKU or web address instead.</li>
+        <li>A file can hold up to 2,000 bags and be up to 2 MB. Save an Excel workbook as CSV before choosing it.</li>
+      </ul>
+      <div class="note important">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
+        <div><p><strong>Stock in the file replaces the stock in the shop.</strong> If bags have sold since you exported, check the stock changes in the preview, or set the Stock column to <span class="ui">Ignore this column</span>.</p></div>
+      </div>
     </section>
 
     <!-- 10 -->
@@ -559,7 +621,7 @@
     <!-- 13 -->
     <section class="topic" id="delivery">
       <div class="topic-head"><span class="num">13</span><h2>Delivery and ordering</h2><a class="anchor" href="#delivery">Copy link</a></div>
-      <p class="summary">Settings → Shop (admins and shop managers): the delivery charge and times, and where new orders are emailed.</p>
+      <p class="summary">Settings → Shop (admins and shop managers): the delivery charge and times, the photo note, and where new orders are emailed.</p>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-shop-settings.webp" alt="The Shop settings page with a green box saying Online ordering is open, then the Delivery, Timings and Orders and returns sections." width="2560" height="2000" loading="lazy"></button><figcaption>The box at the top says whether online ordering is open, and lists what is missing if not.</figcaption></figure>
 
       <h3 id="ordering-open">When can customers pay?</h3>
@@ -570,10 +632,11 @@
         <table>
           <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
           <tbody>
-            <tr><td>Delivery charge (inc. VAT)</td><td>Charged once per order, however many bags. Shown beside every price, for example “+ £12.00 UK delivery”. £0.00 means free UK delivery.</td></tr>
+            <tr><td>Delivery charge (excluding VAT)</td><td>Charged once per order, however many bags. Enter it before VAT: VAT is added in proportion to the products in the order that carry VAT (<a href="#vat">how VAT works</a>). Shown beside every price, for example “+ £15.00 UK delivery”. £0.00 means free UK delivery.</td></tr>
             <tr><td>Not set yet</td><td>Keeps online ordering closed until you are ready.</td></tr>
             <tr><td>Delivery label</td><td>The name of the charge, normally “UK delivery”.</td></tr>
             <tr><td>Delivery statement</td><td>The sentence about timings shown on the basket, the product pages, the delivery page and the confirmation email.</td></tr>
+            <tr><td>Photo note</td><td>Optional. One sentence under the photos on every bag's page, saying what they show, for example “Photos show typical stock; every bag is different.” Leave it empty to show nothing.</td></tr>
             <tr><td>Dispatched within / Delivery takes from / up to (days)</td><td>Working days. Told to Google beside each bag and shown on Stripe's payment page.</td></tr>
             <tr><td>Notification email</td><td>A shop mailbox that gets every new order and contact message, as every staff account does. Required for online ordering.</td></tr>
             <tr><td>Returns accepted in store</td><td>Lets the returns page say customers can bring a return to the warehouse as well as posting it.</td></tr>
@@ -664,7 +727,9 @@
       <details class="faq" id="faq-wrong-address"><summary>The delivery address on an order is wrong</summary><div><p>Addresses on orders cannot be edited, because they come from the payment. Contact the customer, write the correct address in the <strong>Admin notes</strong>, and use it on the parcel.</p></div></details>
       <details class="faq" id="faq-fulfilled-by-mistake"><summary>I marked an order fulfilled by mistake</summary><div><p>It cannot be undone. Write a note on the order so the team knows, and dispatch it as normal when it is ready.</p></div></details>
       <details class="faq" id="faq-delete-account"><summary>A customer asks us to delete their account</summary><div><p>Go to <strong>Customers</strong>, find them, and choose <span class="ui">…</span> → <strong>Delete account</strong>. Their orders and invoices stay, as the law requires.</p></div></details>
-      <details class="faq" id="faq-price"><summary>Does changing a price affect past orders?</summary><div><p>No. Orders and invoices keep the price that was paid. The new price applies to new orders only.</p></div></details>
+      <details class="faq" id="faq-no-vat"><summary>How do I sell a product without VAT?</summary><div><p>Open the product, switch <strong>Add VAT at checkout</strong> off and press <span class="ui">Save</span>. The shop then shows “No VAT” beside its price. In an import, put <em>no</em> in the VAT column. See <a href="#vat">Prices and VAT</a>.</p></div></details>
+      <details class="faq" id="faq-pays-more"><summary>Why did a customer pay more than the price I entered?</summary><div><p>Prices are entered before VAT. At checkout the website adds 20% VAT to each product that carries it and to the matching share of delivery. The order page and the invoice show the VAT on its own line. See <a href="#vat">Prices and VAT</a>.</p></div></details>
+      <details class="faq" id="faq-price"><summary>Does changing a price affect past orders?</summary><div><p>No. Orders and invoices keep the price and the VAT that were paid. A new price, or switching VAT on or off, applies to new orders only.</p></div></details>
       <details class="faq" id="faq-not-showing"><summary>I changed something but the website does not show it</summary><div><p>Check the change was saved (no <em>Unsaved changes</em> label) and reload the public page. A bag also needs <strong>Published</strong> switched on, and a content page needs <strong>Published</strong> on to be seen.</p></div></details>
     </section>
 
