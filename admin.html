@@ -288,7 +288,7 @@
         <li>Pack and send the parcel.</li>
         <li>Press <span class="ui">Mark fulfilled</span>, then <span class="ui">Mark fulfilled</span> again in the box that asks you to confirm.</li>
       </ol>
-      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-order.webp" alt="An order page: Order 0068 marked Paid, with Mark fulfilled and Download invoice buttons, the items and totals, admin notes, and boxes for the customer, delivery and billing addresses, Stripe and the timeline." width="2560" height="2000" loading="lazy"></button><figcaption>An order page. The timeline at the bottom right shows every step with its time, including when the emails went out.</figcaption></figure>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-order.webp" alt="An order page: Order 0068 marked Paid, with Mark fulfilled and Download invoice buttons, the item with its unit price before VAT and its VAT rate, the subtotal, delivery, VAT and total, admin notes, and boxes for the customer, delivery and billing addresses, Stripe and the timeline." width="2560" height="2000" loading="lazy"></button><figcaption>An order page. The timeline at the bottom right shows every step with its time, including when the emails went out.</figcaption></figure>
       <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-order-fulfil.webp" alt="A box asking Mark this order fulfilled? Use this once the parcel has been dispatched. The customer is not emailed, and it cannot be undone. With Cancel and Mark fulfilled buttons." width="2560" height="1520" loading="lazy"></button><figcaption>The website asks before marking an order fulfilled.</figcaption></figure>
       <div class="note important">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
@@ -396,7 +396,7 @@
     <section class="topic" id="products">
       <div class="topic-head"><span class="num">9</span><h2>Products</h2><a class="anchor" href="#products">Copy link</a></div>
       <p class="summary">The bags for sale. Each one has a name, a price before VAT, stock, photos and a description.</p>
-      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-products.webp" alt="The Products list with a photo, name, SKU, kind, price, stock, available count and a Published switch for each bag." width="2560" height="1520" loading="lazy"></button><figcaption>The Products list. The Published switch takes a bag in or out of the shop straight away.</figcaption></figure>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-products.webp" alt="The Products list with Import, Export and New product buttons, and for each bag a tick box, photo, name, SKU, kind, price with + VAT or No VAT under it, stock, available count and a Published switch." width="2560" height="1498" loading="lazy"></button><figcaption>The Products list. The Published switch takes a bag in or out of the shop straight away.</figcaption></figure>
       <ul class="list">
         <li>Search by name or SKU, and use the menu to show <strong>Published</strong>, <strong>Unpublished</strong> or <strong>Sold out</strong> bags.</li>
         <li>The <strong>Price</strong> is before VAT, with <strong>+ VAT</strong> or <strong>No VAT</strong> under it (<a href="#vat">how VAT works</a>).</li>
@@ -416,7 +416,7 @@
         <li>Leave <strong>Published</strong> on to put it in the shop straight away. Switch <strong>Featured</strong> on to show it first on the home page.</li>
         <li>Press <span class="ui">Create product</span>. The edit page opens: give each photo its <strong>alt text</strong> (see below) and check everything with <span class="ui">View in shop</span>.</li>
       </ol>
-      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-product-new.webp" alt="The New product form with Name, Kind, SKU, Short description and Description on the left, and Price, Stock, Weight, Pieces, Sizes, Position, Published and Featured on the right." width="2560" height="2000" loading="lazy"></button><figcaption>The New product form.</figcaption></figure>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-product-new.webp" alt="The New product form with Name, Kind, SKU, Short description and Description on the left, and Price (excluding VAT), the Add VAT at checkout switch, Stock, Weight, Pieces, Sizes and Position on the right." width="2560" height="2000" loading="lazy"></button><figcaption>The New product form.</figcaption></figure>
 
       <h3 id="product-fields">What each field does</h3>
       <div class="table-wrap">
@@ -486,7 +486,7 @@
         <li>While a customer is paying, their bags are held for 35 minutes. If a bag looks sold out but you have stock, someone is probably paying for it right now.</li>
         <li>If someone buys while you have the edit page open and you also changed Stock, the website asks you to check the number again before saving, so no sale is lost.</li>
       </ul>
-      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-product-edit.webp" alt="The edit page of a product showing Published and last saved at the top, View in shop and Delete buttons, and the product's fields." width="2560" height="2000" loading="lazy"></button><figcaption>Editing a bag. Press Save at the bottom when you are done.</figcaption></figure>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-product-edit.webp" alt="The edit page of a product showing Published and last saved at the top, View in shop and Delete buttons, and the product's fields, including Price (excluding VAT) and Add VAT at checkout." width="2560" height="2000" loading="lazy"></button><figcaption>Editing a bag. Press Save at the bottom when you are done.</figcaption></figure>
 
       <h3 id="delete-product">Removing a bag</h3>
       <p>To take a bag out of the shop for a while, switch <strong>Published</strong> off. To remove it for good, use <span class="ui">Delete</span>. Past orders keep their own copy of the details, so deleting a bag never changes an order or invoice. A deleted bag's web address stops working; add a <a href="#redirects">redirect</a> if it was shared widely.</p>
@@ -500,6 +500,7 @@
         <li>Choose which bags: the ticked ones, the ones your search and filter show, or all of them. Then choose the columns; all are ticked to start.</li>
         <li>Press <span class="ui">Download CSV</span>.</li>
       </ol>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-products-export.webp" alt="The Export products box over the Products list, with two bags ticked, Which products set to the 2 selected products, every column ticked, and a Download CSV button." width="2560" height="2000" loading="lazy"></button><figcaption>Exporting two ticked bags.</figcaption></figure>
       <p><strong>To import:</strong></p>
       <ol class="steps">
         <li>On <strong>Products</strong>, press <span class="ui">Import</span>.</li>
@@ -509,6 +510,7 @@
         <li><strong>Check the preview.</strong> Each row says <em>New product</em>, <em>Update</em> (with every change, such as “Price: £50.00 → £55.00”), <em>Put back</em> (a deleted bag whose web address is in the file), <em>Skipped</em> or <em>Problem</em> (with the reason). Nothing is saved yet.</li>
         <li>Press the import button under the preview, which says how many bags it will add or change (for example <span class="ui">Import 4 products</span>). Rows with problems are left out and listed afterwards: correct them in the spreadsheet and import the file again.</li>
       </ol>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-products-import.webp" alt="The Import products page after choosing a file: each column matched to a product detail, the three import choices, and a preview with two updates (a price change and a stock change) and one new product, above an Import 3 products button." width="2560" height="2366" loading="lazy"></button><figcaption>The preview shows every change before anything is saved.</figcaption></figure>
       <ul class="list">
         <li>A row changes an existing bag when its <strong>ID</strong>, <strong>SKU</strong> or <strong>web address</strong> matches one. Any other row adds a new bag. Keep the ID column in an export you mean to import again.</li>
         <li>Only the columns in the file are changed. A file with just ID, Price and Stock changes only prices and stock.</li>
@@ -622,7 +624,7 @@
     <section class="topic" id="delivery">
       <div class="topic-head"><span class="num">13</span><h2>Delivery and ordering</h2><a class="anchor" href="#delivery">Copy link</a></div>
       <p class="summary">Settings → Shop (admins and shop managers): the delivery charge and times, the photo note, and where new orders are emailed.</p>
-      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-shop-settings.webp" alt="The Shop settings page with a green box saying Online ordering is open, then the Delivery, Timings and Orders and returns sections." width="2560" height="2000" loading="lazy"></button><figcaption>The box at the top says whether online ordering is open, and lists what is missing if not.</figcaption></figure>
+      <figure class="shot"><button type="button" aria-label="Open this screenshot full size"><img src="images/admin-shop-settings.webp" alt="The Shop settings page with a green box saying Online ordering is open, then the Delivery section with the delivery charge excluding VAT, the delivery label, the delivery statement and the photo note, and the start of Timings." width="2560" height="2000" loading="lazy"></button><figcaption>The box at the top says whether online ordering is open, and lists what is missing if not.</figcaption></figure>
 
       <h3 id="ordering-open">When can customers pay?</h3>
       <p>Customers can pay only when four things are set: the <strong>delivery charge</strong>, the <strong>notification email</strong>, the shop's <strong>public email</strong> (Settings → Business) and the <strong>Stripe key</strong> (the developer). Until then the basket says <em>“Online ordering opens soon”</em>, and the rest of the website works as normal.</p>
